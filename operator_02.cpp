@@ -1,4 +1,4 @@
-﻿// operator_02.cpp : Этот файл содержит функцию "main". Здесь начинается и заканчивается выполнение программы.
+﻿// operator_02.cpp :
 //
 
 #include <iostream>
@@ -30,61 +30,55 @@ public:
 		std::cout << "Значение дроби 1: " << numerator_ << " / " << denominator_ << std::endl;
 	}
 	
-	Fraction operator+(Fraction) const;
-	Fraction operator-(Fraction) const;
-	Fraction operator*(Fraction) const;
-	Fraction operator/(Fraction) const;
-	Fraction operator++();
-	Fraction operator--(int);
-	Fraction operator++(int);
-	Fraction operator--();
+	Fraction operator+(const Fraction& other)
+	{
+		Fraction temp{0,0};
+		
+		temp.numerator_ = numerator_ * other.denominator_; 
+		temp.denominator_ = denominator_ * other.numerator_; 
+		temp.numerator_ = temp.numerator_ + temp.denominator_;
+		temp.denominator_ = denominator_ * other.denominator_;
+		return temp;
+	}
+	Fraction operator-(const Fraction& other)
+	{
+		Fraction temp{ 0,0 };
+
+		temp.numerator_ = numerator_ * other.denominator_; 
+		temp.denominator_ = denominator_ * other.numerator_; 
+		temp.numerator_ = temp.numerator_ - temp.denominator_;
+		temp.denominator_ = denominator_ * other.denominator_;
+		return temp;
+	}
+	Fraction operator*(const Fraction& other)
+	{
+		Fraction temp{ 0,0 };
+
+		temp.numerator_ = numerator_ * other.denominator_; 
+		temp.denominator_ = denominator_ * other.numerator_; 
+		temp.numerator_ = temp.numerator_ * temp.denominator_;
+		temp.denominator_ = denominator_ * other.denominator_;
+		return temp;
+	}
+	Fraction operator/(const Fraction& other)
+	{
+		Fraction temp{ 0,0 };
+
+		temp.numerator_ = numerator_ * other.denominator_; 
+		temp.denominator_ = denominator_ * other.numerator_; 
+		temp.numerator_ = temp.numerator_ / temp.denominator_;
+		temp.denominator_ = denominator_ * other.denominator_;
+		return temp;
+	}
+
+
+
+
+
+
 };
 
-Fraction Fraction::operator+ (Fraction plus) const
-{
-	int n = numerator_ + plus.numerator_;
-	int d =  denominator_+ plus.denominator_;
-	return Fraction(n, d);
-}
-Fraction Fraction::operator- (Fraction minus) const
-{
-	int n = numerator_ - minus.numerator_;
-	int d = denominator_ - minus.denominator_;
-	return Fraction(n, d);
-}
-Fraction Fraction::operator* (Fraction multiplication) const
-{
-	int n = numerator_ * multiplication.numerator_;
-	int d = denominator_ * multiplication.denominator_;
-	return Fraction(n, d);
-}
-Fraction Fraction::operator/ (Fraction multiplication) const
-{
-	int n = numerator_ / multiplication.numerator_;
-	int d = denominator_ / multiplication.denominator_;
-	return Fraction(n, d);
-}
-Fraction Fraction::operator++()
-{
-	
-	return Fraction(++count);
-}
 
-Fraction Fraction::operator--(int)
-{
-	
-	return Fraction(count--);
-}
-Fraction Fraction::operator++(int)
-{
-
-	return Fraction(count++);
-}
-Fraction Fraction::operator--()
-{
-
-	return Fraction(--count);
-}
 
 
 
@@ -127,7 +121,9 @@ int main()
 	std::cout << one_1 << " / " << one_2 << " * " << two_1 << " / " << two_2 << " = "; f3.print();
 	f3 = f1 / f2;
 	std::cout << one_1 << " / " << one_2 << " / " << two_1 << " / " << two_2 << " = "; f3.print();
-	f3 = ++f1 * f2;
+	
+	
+	/*f3 = ++f1 * f2;
 	std::cout << one_1 << " / " << one_2 << " ++ " << two_1 << " / " << two_2 << " = "; f3.print();
 	f3 = f1-- * f2;
 	std::cout << one_1 << " / " << one_2 << " -- " << two_1 << " / " << two_2 << " = "; f3.print();
@@ -138,7 +134,7 @@ int main()
 	 --f1;
 	 f1.print();
 	 f1--;
-	 f1.print();
+	 f1.print();*/
 	 
 	 
 	 
