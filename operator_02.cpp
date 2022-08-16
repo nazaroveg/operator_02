@@ -17,7 +17,7 @@ public:
 		numerator_ = numerator;
 		denominator_ = denominator;
 	}
-	Fraction (int cou): count (cou) {}
+	
 
 	void print()
 	{
@@ -29,47 +29,126 @@ public:
 
 		std::cout << "Значение дроби 1: " << numerator_ << " / " << denominator_ << std::endl;
 	}
+	 int divisor( int a, int b) {
+		if (a % b == 0)
+			return b;
+		if (b % a == 0)
+			return a;
+		if (a > b)
+			return divisor(a % b, b);
+		return divisor(a, b % a);
+	}
+
+
 	
-	Fraction operator+(const Fraction& other)
+	Fraction operator + (const Fraction& other)
 	{
 		Fraction temp{0,0};
+		if (denominator_ != other.denominator_)
+		{
+			temp.numerator_ = numerator_ * other.denominator_;
+			temp.denominator_ = denominator_ * other.numerator_;
+			temp.numerator_ = temp.numerator_ + temp.denominator_;
+			temp.denominator_ = denominator_ * other.denominator_;
+			return temp;
+		}
+		else
+		{
+			temp.numerator_ = numerator_ + other.numerator_;
+			temp.denominator_ = denominator_;
+			return temp;
+		}
+	}
+	Fraction operator - (const Fraction& other)
+	{
+		Fraction temp{ 0,0 };
+		if (denominator_ != other.denominator_)
+		{
+			temp.numerator_ = numerator_ * other.denominator_;
+			temp.denominator_ = denominator_ * other.numerator_;
+			temp.numerator_ = temp.numerator_ - temp.denominator_;
+			temp.denominator_ = denominator_ * other.denominator_;
+			return temp;
+		}
+		else
+		{
+			temp.numerator_ = numerator_ - other.numerator_;
+			temp.denominator_ = denominator_;
+			return temp;
+		}
+
+
+	}
+	Fraction operator * (const Fraction& other)
+	{
+		Fraction temp{ 0,0 };
+
+		temp.numerator_ = numerator_ * other.numerator_; 
+		temp.denominator_ = denominator_ * other.denominator_; 
 		
-		temp.numerator_ = numerator_ * other.denominator_; 
-		temp.denominator_ = denominator_ * other.numerator_; 
-		temp.numerator_ = temp.numerator_ + temp.denominator_;
-		temp.denominator_ = denominator_ * other.denominator_;
+		int dev = divisor(temp.numerator_, temp.denominator_);
+		
+		temp.numerator_ = temp.numerator_ / dev;
+		temp.denominator_ = temp.denominator_ / dev;
+
 		return temp;
 	}
-	Fraction operator-(const Fraction& other)
+	Fraction operator / (const Fraction& other)
 	{
 		Fraction temp{ 0,0 };
 
 		temp.numerator_ = numerator_ * other.denominator_; 
 		temp.denominator_ = denominator_ * other.numerator_; 
-		temp.numerator_ = temp.numerator_ - temp.denominator_;
-		temp.denominator_ = denominator_ * other.denominator_;
+		
 		return temp;
 	}
-	Fraction operator*(const Fraction& other)
+	Fraction& sum()
 	{
 		Fraction temp{ 0,0 };
-
-		temp.numerator_ = numerator_ * other.denominator_; 
-		temp.denominator_ = denominator_ * other.numerator_; 
-		temp.numerator_ = temp.numerator_ * temp.denominator_;
-		temp.denominator_ = denominator_ * other.denominator_;
-		return temp;
+		temp.numerator_ = numerator_ + denominator_;
+		temp.denominator_ = denominator_;
+		return *this;
 	}
-	Fraction operator/(const Fraction& other)
+	
+	Fraction operator ++ ()
 	{
 		Fraction temp{ 0,0 };
-
-		temp.numerator_ = numerator_ * other.denominator_; 
-		temp.denominator_ = denominator_ * other.numerator_; 
-		temp.numerator_ = temp.numerator_ / temp.denominator_;
-		temp.denominator_ = denominator_ * other.denominator_;
+		temp.numerator_ = numerator_ + denominator_;
+		temp.denominator_ = denominator_;
 		return temp;
 	}
+	Fraction operator ++ (int)
+	{
+		Fraction temp = *this;
+		++(*this);
+		
+		return temp;
+	}
+
+	Fraction& res()
+	{
+		Fraction temp{ 0,0 };
+		temp.numerator_ = numerator_ - denominator_;
+		temp.denominator_ = denominator_;
+		return *this;
+	}
+
+	Fraction operator -- ()
+	{
+		Fraction temp{ 0,0 };
+		temp.numerator_ = numerator_ - denominator_;
+		temp.denominator_ = denominator_;
+		return temp;
+	}
+	Fraction operator -- (int)
+	{
+		Fraction temp = *this;
+		--(*this);
+
+		return temp;
+	}
+
+
 
 
 
@@ -121,22 +200,17 @@ int main()
 	std::cout << one_1 << " / " << one_2 << " * " << two_1 << " / " << two_2 << " = "; f3.print();
 	f3 = f1 / f2;
 	std::cout << one_1 << " / " << one_2 << " / " << two_1 << " / " << two_2 << " = "; f3.print();
-	
-	
-	/*f3 = ++f1 * f2;
-	std::cout << one_1 << " / " << one_2 << " ++ " << two_1 << " / " << two_2 << " = "; f3.print();
+	f3 = ++f1 * f2;
+	std::cout << " ++ " << one_1 << " / " << one_2 << " * " << two_1 << " / " << two_2 << " = "; f3.print();
 	f3 = f1-- * f2;
-	std::cout << one_1 << " / " << one_2 << " -- " << two_1 << " / " << two_2 << " = "; f3.print();
-	++f1;
-	 f1.print();
-	 f1++;
-	 f1.print();
-	 --f1;
-	 f1.print();
-	 f1--;
-	 f1.print();*/
-	 
-	 
-	 
+	std::cout << one_1 << " / " << one_2 <<"--" <<" * " << two_1 << " / " << two_2 << " = "; f3.print();
+
+
+
+
+	f3 = ++f1; f3.print2();
+	f3 = f1++; f3.print2();
+	f3 = --f1; f3.print2();
+	f3 = f1--; f3.print2();
 	return 0;
 }
