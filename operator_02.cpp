@@ -107,6 +107,8 @@ public:
 		Fraction temp{ 0,0 };
 		temp.numerator_ = numerator_ + denominator_;
 		temp.denominator_ = denominator_;
+		numerator_ = temp.numerator_;
+		denominator_ = temp.denominator_;
 		return *this;
 	}
 	
@@ -115,6 +117,8 @@ public:
 		Fraction temp{ 0,0 };
 		temp.numerator_ = numerator_ + denominator_;
 		temp.denominator_ = denominator_;
+		numerator_ = temp.numerator_;
+		denominator_ = temp.denominator_;
 		return temp;
 	}
 	Fraction operator ++ (int)
@@ -130,6 +134,8 @@ public:
 		Fraction temp{ 0,0 };
 		temp.numerator_ = numerator_ - denominator_;
 		temp.denominator_ = denominator_;
+		numerator_ = temp.numerator_;
+		denominator_ = temp.denominator_;
 		return *this;
 	}
 
@@ -138,6 +144,8 @@ public:
 		Fraction temp{ 0,0 };
 		temp.numerator_ = numerator_ - denominator_;
 		temp.denominator_ = denominator_;
+		numerator_ = temp.numerator_;
+		denominator_ = temp.denominator_;
 		return temp;
 	}
 	Fraction operator -- (int)
@@ -205,12 +213,13 @@ int main()
 	f3 = f1-- * f2;
 	std::cout << one_1 << " / " << one_2 <<"--" <<" * " << two_1 << " / " << two_2 << " = "; f3.print();
 
+	f1++; f1.print2();
+	++f1; f1.print2();
+	f1--; f1.print2();
+	--f1; f1.print2();
 
 
-
-	f3 = ++f1; f3.print2();
-	f3 = f1++; f3.print2();
-	f3 = --f1; f3.print2();
-	f3 = f1--; f3.print2();
+	
+	
 	return 0;
 }
